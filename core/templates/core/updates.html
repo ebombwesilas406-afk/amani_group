@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Updates & News | Unity Trust{% endblock title %}
+
+{% block content %}
+<div class="text-center py-3 py-md-5">
+    <h1 class="display-4 display-md-3 fw-bold text-body">Updates & News</h1>
+    <p class="lead text-body-secondary fs-6 fs-md-5">Stay informed with the latest happenings at Unity Trust.</p>
+</div>
+
+<div class="container pb-4 pb-md-5">
+    <div class="row g-3 g-md-5">
+        
+        <div class="col-lg-7">
+            <h2 class="h3 fw-bold mb-4"><i class="bi bi-clock-history me-2 text-primary"></i>Recent Updates</h2>
+            
+            <div class="position-relative ps-4 border-start border-2 border-light">
+                <div class="mb-5 position-relative">
+                    <div class="position-absolute top-0 start-0 translate-middle bg-primary rounded-circle" style="width: 15px; height: 15px; margin-left: -1px;"></div>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="badge bg-primary-subtle text-primary mb-2 px-3">March 2026</div>
+                            <h4 class="h5 fw-bold">Annual General Meeting (AGM)</h4>
+                            <p class="text-body-secondary mb-0">Our 2026 AGM is officially scheduled for <strong>15th April</strong>. All members are encouraged to attend to discuss our financial health and future growth.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-5 position-relative">
+                    <div class="position-absolute top-0 start-0 translate-middle bg-secondary rounded-circle" style="width: 15px; height: 15px; margin-left: -1px;"></div>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="badge bg-secondary-subtle text-secondary mb-2 px-3">February 2026</div>
+                            <h4 class="h5 fw-bold">Medical Support Program Launch</h4>
+                            <p class="text-body-secondary mb-0">We have successfully launched the new medical aid initiative, providing members with faster access to emergency funds for hospital bills.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-0 position-relative">
+                    <div class="position-absolute top-0 start-0 translate-middle bg-secondary rounded-circle" style="width: 15px; height: 15px; margin-left: -1px;"></div>
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="badge bg-secondary-subtle text-secondary mb-2 px-3">January 2026</div>
+                            <h4 class="h5 fw-bold">Community Mentorship Initiative</h4>
+                            <p class="text-body-secondary mb-0">The program kicked off with 50 active participants across Western Kenya, focusing on youth leadership and financial literacy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="mb-5">
+                <h2 class="h4 fw-bold mb-4"><i class="bi bi-calendar-check me-2 text-success"></i>Upcoming Events</h2>
+                <div class="card border-0 bg-body shadow-sm mb-3">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="text-center border-end pe-3 me-3">
+                            <span class="d-block fw-bold text-success">Monthly</span>
+                            <span class="small text-body-secondary">Saturday</span>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Member Meet-up</h6>
+                            <small class="text-body-secondary">Last Saturday of every month</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="card border-0 bg-body shadow-sm">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="text-center border-end pe-3 me-3">
+                            <span class="d-block fw-bold text-success">10 May</span>
+                            <span class="small text-body-secondary">2026</span>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Charity Drive</h6>
+                            <small class="text-body-secondary">Location to be announced soon</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="h4 fw-bold mb-4"><i class="bi bi-megaphone me-2 text-warning"></i>Announcements</h2>
+                <div class="alert alert-warning border-0 shadow-sm rounded-4 p-4">
+                    <p class="mb-3 small"><strong>Support Requests:</strong> Members are encouraged to submit requests for aid via our official WhatsApp or Portal channels.</p>
+                    <hr>
+                    <p class="mb-0 small"><strong>Volunteers Needed:</strong> We are looking for passionate members to lead our next charity drive. <a href="{% url 'contact' %}" class="fw-bold text-body text-decoration-none">Sign up here &rarr;</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styling for custom badges */
+    .bg-primary-subtle { background-color: var(--bs-primary-bg-subtle); }
+    .bg-secondary-subtle { background-color: var(--bs-secondary-bg-subtle); }
+</style>
+{% endblock content %}

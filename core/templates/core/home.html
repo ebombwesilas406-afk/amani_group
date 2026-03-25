@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | Unity Trust{% endblock title %}
+
+{% block content %}
+<section class="py-3 py-md-5 text-center">
+    <div class="row py-lg-5 justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <h1 class="display-4 display-md-3 fw-bold text-body mb-3">Unity Trust</h1>
+            <p class="lead text-body-secondary fs-6 fs-md-4 mb-4">"Together in Every Season"</p>
+            <p class="text-body-secondary fs-6 fs-md-5 mb-4 mb-md-5 px-2 px-md-5">
+                A purpose-driven organization committed to supporting members across Western Kenya through solidarity, compassion, and mutual aid.
+            </p>
+            <div class="d-grid gap-2 gap-md-3 d-sm-flex justify-content-sm-center">
+                <a href="{% url 'membership' %}" class="btn btn-primary btn-lg px-4 px-md-5 shadow-sm">
+                    <i class="bi bi-person-plus me-2"></i>Join Us
+                </a>
+            <a href="{% url 'about' %}" 
+   class="btn btn-outline-secondary btn-lg px-4 px-md-5 text-body border-secondary">
+   Learn More
+</a>
+            </div>
+        </div>
+</section>
+
+<section class="pb-4 pb-md-5">
+    <div class="container">
+        <div class="row g-3 g-md-4 text-center">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 p-3 p-md-4 border-0 bg-body shadow-sm hover-up">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-heart-pulse-fill fs-3 fs-md-1 text-danger"></i>
+                    </div>
+                    <h3 class="h5 fw-bold">Medical & Funeral Aid</h3>
+                    <p class="text-body-secondary small">A reliable support system for health emergencies and compassionate funeral assistance.</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 p-3 p-md-4 border-0 bg-body shadow-sm hover-up">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-shield-fill-check fs-3 fs-md-1 text-primary"></i>
+                    </div>
+                    <h3 class="h5 fw-bold">Emergency Response</h3>
+                    <p class="text-body-secondary small">Fast-acting support when you face life's unexpected challenges. You are never alone.</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 p-3 p-md-4 border-0 bg-body shadow-sm hover-up">
+                    <div class="feature-icon mb-3">
+                        <i class="bi bi-people-fill fs-3 fs-md-1 text-success"></i>
+                    </div>
+                    <h3 class="h5 fw-bold">Community Unity</h3>
+                    <p class="text-body-secondary small">Engage with a network of members dedicated to mutual growth and solidarity across Western Kenya.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Subtle hover effect for the feature cards */
+    .hover-up {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-up:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    }
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: var(--bs-body-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+</style>
+{% endblock content %}

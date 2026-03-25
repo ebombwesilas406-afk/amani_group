@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Membership | Unity Trust{% endblock title %}
+
+{% block content %}
+<div class="text-center py-3 py-md-5 bg-body border-bottom mb-4 mb-md-5">
+    <div class="container">
+        <h1 class="display-4 display-md-3 fw-bold text-body">Become a Member</h1>
+        <p class="lead text-body-secondary fs-6 fs-md-5">Join a movement that makes a real difference in Western Kenya.</p>
+        <div class="mt-3 mt-md-4">
+            <span class="badge rounded-pill bg-success px-2 px-md-3 py-1 py-md-2 fs-6">Open for 2026 Applications</span>
+        </div>
+    </div>
+</div>
+
+<div class="container pb-4 pb-md-5">
+    <div class="row g-3 g-md-4 mb-4 mb-md-5">
+        <div class="col-12 text-center mb-2">
+            <h2 class="fw-bold fs-5 fs-md-4">Why Join Unity Trust?</h2>
+            <p class="text-body-secondary fs-6 fs-md-5">Membership is more than a subscription; it's a safety net.</p>
+        </div>
+        
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-3 p-md-4">
+                <i class="bi bi-shield-shaded text-primary fs-3 fs-md-1 mb-3\"></i>
+                <h5 class="fw-bold fs-6\">Security</h5>
+                <p class="small text-body-secondary mb-0 fs-6\">Full access to funeral and medical support programs.</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-3 p-md-4">
+                <i class="bi bi-lightning-auto text-warning fs-3 fs-md-1 mb-3\"></i>
+                <h5 class="fw-bold fs-6\">Emergency</h5>
+                <p class="small text-body-secondary mb-0 fs-6\">Immediate assistance during urgent life situations.</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-3 p-md-4">
+                <i class="bi bi-mortarboard text-success fs-3 fs-md-1 mb-3\"></i>
+                <h5 class="fw-bold fs-6\">Growth</h5>
+                <p class="small text-body-secondary mb-0 fs-6\">Participation in leadership and mentorship programs.</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+            <div class="card h-100 border-0 shadow-sm text-center p-3 p-md-4">
+                <i class="bi bi-people-fill text-info fs-3 fs-md-1 mb-3\"></i>
+                <h5 class="fw-bold fs-6\">Belonging</h5>
+                <p class="small text-body-secondary mb-0 fs-6\">Connect with like-minded individuals in your community.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 g-md-5 align-items-start align-items-md-center">
+        <div class="col-12 col-lg-6">
+            <div class="p-3 p-md-4 bg-body-tertiary rounded-4 shadow-sm">
+                <h3 class="fw-bold mb-3 mb-md-4 fs-5 fs-md-4">Member Responsibilities</h3>
+                <ul class="list-group list-group-flush bg-transparent">
+                    <li class="list-group-item bg-transparent px-0 border-light d-flex">
+                        <i class="bi bi-check-circle-fill text-primary me-3 flex-shrink-0"></i>
+                        <span class="fs-6">Active participation in group activities.</span>
+                    </li>
+                    <li class="list-group-item bg-transparent px-0 border-light d-flex">
+                        <i class="bi bi-check-circle-fill text-primary me-3 flex-shrink-0"></i>
+                        <span class="fs-6">Timely contribution to support initiatives.</span>
+                    </li>
+                    <li class="list-group-item bg-transparent px-0 border-0 d-flex">
+                        <i class="bi bi-check-circle-fill text-primary me-3 flex-shrink-0"></i>
+                        <span class="fs-6">Upholding group values and supporting fellow members.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <h3 class="fw-bold mb-3 mb-md-4 fs-5 fs-md-4">How to Join</h3>
+            <div class="ps-3 ps-md-4 border-start border-3 border-primary">
+                <div class="mb-3 mb-md-4">
+                    <h6 class="fw-bold mb-1 fs-6">Step 1: Contact Us</h6>
+                    <p class="small text-body-secondary fs-6">Email <a href="mailto:membership@unitytrust.org" class="text-decoration-none">membership@unitytrust.org</a> or call +254 700 123 456.</p>
+                </div>
+                <div class="mb-3 mb-md-4">
+                    <h6 class="fw-bold mb-1 fs-6">Step 2: Visit Our Office</h6>
+                    <p class="small text-body-secondary fs-6">Located in Kakamega Town, Western Kenya for a brief orientation.</p>
+                </div>
+                <div>
+                    <h6 class="fw-bold mb-1 fs-6">Step 3: Onboarding</h6>
+                    <p class="small text-body-secondary fs-6">Complete the registration form and start your journey with us.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 mt-md-5 p-3 p-md-4 p-lg-5 bg-primary text-white text-center rounded-4 shadow-lg">
+        <h2 class="fw-bold mb-2 mb-md-3 fs-5 fs-md-3">Ready to Join the Movement?</h2>
+        <p class="lead mb-3 mb-md-4 opacity-75 fs-6 fs-md-5">We welcome new members who share our vision for a stronger community.</p>
+        <a href="{% url 'contact' %}" class="btn btn-light btn-lg px-4 px-md-5 fw-bold rounded-pill text-primary\">Get Started</a>
+    </div>
+</div>
+
+<style>
+    /* Styling for the Primary CTA block */
+    .bg-primary {
+        background: linear-gradient(135deg, #0d3b66 0%, #1a5a92 100%) !important;
+    }
+</style>
+{% endblock content %}

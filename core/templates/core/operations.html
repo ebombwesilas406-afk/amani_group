@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Support & Activities | Unity Trust{% endblock title %}
+
+{% block content %}
+<div class="text-center py-3 py-md-5">
+    <h1 class="display-4 display-md-3 fw-bold text-body">Support & Activities</h1>
+    <p class="lead text-body-secondary fs-6 fs-md-5">Empowering our members through action and mutual aid.</p>
+</div>
+
+<div class="container pb-4 pb-md-5">
+    <div class="mb-5">
+        <h2 class="h4 h3-md fw-bold mb-3 mb-md-4 border-start border-4 border-primary ps-3 fs-5 fs-md-4">Financial & Emergency Support</h2>
+        <div class="row g-3 g-md-4">
+            
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100 overflow-hidden">
+                    <div class="card-body p-3 p-md-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-body-tertiary text-danger rounded-circle p-2 p-md-3 me-3 flex-shrink-0">
+                                <i class="bi bi-heart-fill fs-5 fs-md-4" aria-hidden="true"></i>
+                            </div>
+                            <h4 class="h5 fw-bold mb-0 fs-6 fs-md-5">Funeral Assistance</h4>
+                        </div>
+                        <p class="text-body-secondary small fs-6 mb-0">Comprehensive financial and logistical support to help bereaved members navigate difficult times with dignity.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-3 p-md-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-body-tertiary text-primary rounded-circle p-2 p-md-3 me-3 flex-shrink-0">
+                                <i class="bi bi-hospital-fill fs-5 fs-md-4" aria-hidden="true"></i>
+                            </div>
+                            <h4 class="h5 fw-bold mb-0 fs-6 fs-md-5">Medical Aid</h4>
+                        </div>
+                        <p class="text-body-secondary small fs-6 mb-0">Assistance with hospital bills and coordination for access to emergency care when health crises arise.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-3 p-md-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-body-tertiary text-warning rounded-circle p-2 p-md-3 me-3 flex-shrink-0">
+                                <i class="bi bi-lightning-charge-fill fs-5 fs-md-4" aria-hidden="true"></i>
+                            </div>
+                            <h4 class="h5 fw-bold mb-0 fs-6 fs-md-5">Emergency Response</h4>
+                        </div>
+                        <p class="text-body-secondary small fs-6 mb-0">A rapid-response support network for members facing urgent, unexpected life challenges.</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="pt-3 pt-md-4">
+        <h2 class="h4 h3-md fw-bold mb-3 mb-md-4 border-start border-4 border-success ps-3 fs-5 fs-md-4">Community Activities</h2>
+        <div class="row g-3 g-md-4 text-center">
+            
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="p-3 p-md-4 bg-body rounded-4 shadow-sm border border-top-0 border-success border-3 h-100">
+                    <i class="bi bi-people-fill text-success fs-3 fs-md-1 mb-3" aria-hidden="true"></i>
+                    <h5 class="fw-bold fs-6">Regular Meetings</h5>
+                    <p class="text-body-secondary small mb-0 fs-6">Transparent discussions regarding group initiatives, financial health, and member ideas.</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="p-3 p-md-4 bg-body rounded-4 shadow-sm border border-top-0 border-success border-3 h-100">
+                    <i class="bi bi-globe-central-south-asia text-success fs-3 fs-md-1 mb-3" aria-hidden="true"></i>
+                    <h5 class="fw-bold fs-6">Social Impact</h5>
+                    <p class="text-body-secondary small mb-0 fs-6">Engaging in local clean-ups, mentorship programs, and charity drives across Western Kenya.</p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="p-3 p-md-4 bg-body rounded-4 shadow-sm border border-top-0 border-success border-3 h-100">
+                    <i class="bi bi-mortarboard-fill text-success fs-3 fs-md-1 mb-3" aria-hidden="true"></i>
+                    <h5 class="fw-bold fs-6">Skill Workshops</h5>
+                    <p class="text-body-secondary small mb-0 fs-6">Leadership training and skill-building sessions to empower our members professionally.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Adding a subtle card hover to emphasize value */
+    .card, .rounded-4 {
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .card:hover, .rounded-4:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15) !important;
+    }
+
+    /* Fix for dark mode shadows */
+    [data-bs-theme="dark"] .card, 
+    [data-bs-theme="dark"] .rounded-4 {
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+
+</style>
+{% endblock content %}

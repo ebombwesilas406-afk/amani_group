@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us | Unity Trust{% endblock title %}
+
+{% block content %}
+<div class="text-center py-3 py-md-5">
+    <h1 class="display-4 display-md-3 fw-bold text-body">Get in Touch</h1>
+    <p class="lead text-body-secondary fs-6 fs-md-5">Have a question or need emergency support? Our team is here to help.</p>
+</div>
+
+<div class="container pb-4 pb-md-5">
+    <div class="row g-3 g-md-5">
+        
+        <div class="col-12 col-lg-5">
+            <h3 class="fw-bold mb-3 mb-md-4 fs-5 fs-md-4">Contact Information</h3>
+            
+            <div class="card border-0 shadow-sm mb-3 mb-md-4 p-2 p-md-3">
+                <div class="card-body d-flex flex-column flex-md-row align-items-start">
+                    <div class="bg-primary-subtle text-primary rounded-3 p-2 p-md-3 me-md-3 mb-2 mb-md-0 flex-shrink-0">
+                        <i class="bi bi-telephone-fill fs-5 fs-md-4"></i>
+                    </div>
+                    <div class="w-100">
+                        <h5 class="fw-bold mb-1 fs-6">Call Us</h5>
+                        <p class="small text-body-secondary mb-2 fs-6">Available Mon - Fri, 8am - 5pm</p>
+                        <ul class="list-unstyled mb-0">
+                            <li><small class="fw-bold">General:</small> <a href="tel:+254700123456" class="text-decoration-none text-body">+254 700 123 456</a></li>
+                            <li><small class="fw-bold">Support:</small> <a href="tel:+254700654321" class="text-decoration-none text-body">+254 700 654 321</a></li>
+                            <li class="text-danger mt-1"><small class="fw-bold">Emergency:</small> +254 700 111 222</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm p-2 p-md-3">
+                <div class="card-body d-flex flex-column flex-md-row align-items-start">
+                    <div class="bg-success-subtle text-success rounded-3 p-2 p-md-3 me-md-3 mb-2 mb-md-0 flex-shrink-0">
+                        <i class="bi bi-envelope-at-fill fs-5 fs-md-4"></i>
+                    </div>
+                    <div class="w-100">
+                        <h5 class="fw-bold mb-1 fs-6">Email Us</h5>
+                        <p class="small text-body-secondary mb-2 fs-6">We typically reply within 24 hours.</p>
+                        <ul class="list-unstyled mb-0">
+                            <li><a href="mailto:info@unittrust.com" class="text-decoration-none text-body small">info@unittrust.com</a></li>
+                            <li><a href="mailto:members@unittrust.com" class="text-decoration-none text-body small">members@unittrust.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-7">
+            <div class="card border-0 shadow-lg rounded-4 p-3 p-md-4 p-lg-5">
+                <h3 class="fw-bold mb-3 mb-md-4 fs-5 fs-md-4\">Send a Message</h3>
+                <form>
+                    <div class="row">
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control border-0 bg-body-tertiary" id="name" placeholder="Your Name">
+                                <label for="name">Full Name</label>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 mb-3">
+                            <div class="form-floating">
+                                <input type="email" class="form-control border-0 bg-body-tertiary" id="email" placeholder="name@example.com">
+                                <label for="email">Email address</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="form-floating">
+                            <select class="form-select border-0 bg-body-tertiary" id="subject">
+                                <option selected>General Inquiry</option>
+                                <option value="1">Membership Support</option>
+                                <option value="2">Emergency Assistance</option>
+                                <option value="3">Community Programs</option>
+                            </select>
+                            <label for="subject">How can we help?</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="form-floating">
+                            <textarea class="form-control border-0 bg-body-tertiary" id="message" placeholder="Leave a message here" style="height: 150px"></textarea>
+                            <label for="message">Your Message</label>
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-3 shadow">
+                            <i class="bi bi-send me-2"></i> Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styling for subtle background colors on icons */
+    .bg-primary-subtle { background-color: var(--bs-primary-bg-subtle); }
+    .bg-success-subtle { background-color: var(--bs-success-bg-subtle); }
+    
+    /* Ensuring inputs feel deep and clickable */
+    .form-control:focus, .form-select:focus {
+        background-color: var(--bs-body-bg) !important;
+        box-shadow: 0 0 0 0.25rem rgba(13, 59, 102, 0.1);
+        border: 1px solid var(--primary-color) !important;
+    }
+</style>
+{% endblock content %}
