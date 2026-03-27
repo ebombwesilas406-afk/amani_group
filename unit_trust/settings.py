@@ -12,21 +12,19 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Load environment variables
+load_dotenv()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# SECURITY
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-b+3kj12y7j=8=ij%@3+nwz4sbt3h3^44uo-zho(giw*1uq-z@r'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['.onrender.com']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 
 # Application definition
@@ -39,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core.apps.CoreConfig',
+    'accounts.apps.AccountsConfig',
+    'members.apps.MembersConfig',
+     'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'members.middleware.AuditAndSuspendMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -64,12 +66,21 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'members.context_processors.current_profile',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'unit_trust.wsgi.application'
+
+# Custom user model
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+# Authentication redirects
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'members:dashboard'
+LOGOUT_REDIRECT_URL = 'accounts:login'
 
 
 # Database
@@ -121,3 +132,27 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+# Allow larger uploads (100 MB) for profile images
+# Note: adjust these further if your deployment has reverse proxy/upload limits
+FILE_UPLOAD_MAX_MEMORY_SIZE = int(os.getenv('FILE_UPLOAD_MAX_MEMORY_SIZE', 100 * 1024 * 1024))  # 100 MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.getenv('DATA_UPLOAD_MAX_MEMORY_SIZE', 100 * 1024 * 1024))  # 100 MB
+
+
+# =========================
+# EMAIL CONFIGURATION
+# =========================
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
+
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+
+# Optional (good practice)
+SERVER_EMAIL = EMAIL_HOST_USER
+

@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      body { font-family: Arial, sans-serif; font-size: 12px; }
+      h1,h2 { color: #0d3b66; }
+      .section { margin-bottom: 12px; }
+      .field { margin-bottom: 6px; }
+      .label { font-weight: bold; }
+      table { width: 100%; border-collapse: collapse; }
+      th, td { border: 1px solid #ddd; padding: 6px; }
+    </style>
+  </head>
+  <body>
+    <h1>Membership Record</h1>
+    <div class="section">
+      <h2>Member Details</h2>
+      <div class="field"><span class="label">Full name:</span> {{ user.full_name }}</div>
+      <div class="field"><span class="label">Phone:</span> {{ user.phone_number }}</div>
+      <div class="field"><span class="label">Date of birth:</span> {{ profile.date_of_birth }}</div>
+      <div class="field"><span class="label">National ID:</span> {{ profile.national_id }}</div>
+      <div class="field"><span class="label">Role:</span> {{ user.role }}</div>
+      <div class="field"><span class="label">Status:</span> {{ user.status }}</div>
+    </div>
+
+    <div class="section">
+      <h2>Next of Kin</h2>
+      {% if nok %}
+        <div class="field"><span class="label">Full name:</span> {{ nok.full_name }}</div>
+        <div class="field"><span class="label">Phone:</span> {{ nok.phone_number }}</div>
+        <div class="field"><span class="label">ID number:</span> {{ nok.id_number }}</div>
+        <div class="field"><span class="label">Relationship:</span> {{ nok.relationship }}</div>
+        <div class="field"><span class="label">Address:</span> {{ nok.address }}</div>
+      {% else %}
+        <div>No next of kin recorded.</div>
+      {% endif %}
+    </div>
+
+    <div class="section">
+      <h2>Beneficiaries</h2>
+      {% if beneficiaries %}
+        <table>
+          <thead><tr><th>Name</th><th>Date of Birth</th><th>Relationship</th></tr></thead>
+          <tbody>
+            {% for b in beneficiaries %}
+              <tr><td>{{ b.name }}</td><td>{{ b.date_of_birth }}</td><td>{{ b.relationship }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <div>No beneficiaries recorded.</div>
+      {% endif %}
+    </div>
+
+    <div class="section">
+      <h2>Declaration</h2>
+      <div>{{ profile.declaration_confirmed|yesno:"Confirmed,Not confirmed" }}</div>
+      <div><span class="label">Signature:</span> {{ profile.signature }}</div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Create Account | Unity Trust{% endblock title %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center py-5" style="min-height: 85vh;">
+    <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+        
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="row g-0">
+                <div class="col-lg-4 bg-primary d-none d-lg-flex flex-column align-items-center justify-content-center text-center p-4 text-white">
+                    <i class="bi bi-person-plus display-3 mb-3"></i>
+                    <h4 class="fw-bold">Join Unity</h4>
+                    <p class="small opacity-75">Secure your financial future with our community-driven SACCO.</p>
+                </div>
+
+                <div class="col-lg-8 bg-body p-4 p-md-5">
+                    <div class="mb-4">
+                        <h2 class="fw-bold text-body">Register</h2>
+                        <p class="text-body-secondary small">Enter your details to create your member profile.</p>
+                    </div>
+
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {% render_field form.full_name class="form-control border-0 bg-body-tertiary" placeholder="Full Name" %}
+                                    <label for="{{ form.full_name.id_for_label }}">Full Name</label>
+                                </div>
+                                <div class="text-danger x-small mt-1">{{ form.full_name.errors }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {% render_field form.phone_number class="form-control border-0 bg-body-tertiary" placeholder="Phone" %}
+                                    <label for="{{ form.phone_number.id_for_label }}">Phone Number</label>
+                                </div>
+                                <div class="text-danger x-small mt-1">{{ form.phone_number.errors }}</div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {% render_field form.password1 class="form-control border-0 bg-body-tertiary" placeholder="Password" %}
+                                    <label for="{{ form.password1.id_for_label }}">Password</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {% render_field form.password2 class="form-control border-0 bg-body-tertiary" placeholder="Confirm" %}
+                                    <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="text-danger x-small">{{ form.password1.errors }}</div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mb-3">
+                            <button class="btn btn-primary btn-lg rounded-3 fw-bold shadow-sm py-3" type="submit">
+                                Create Account
+                            </button>
+                        </div>
+
+                        <p class="text-center small text-body-secondary mb-0">
+                            Already a member? <a href="{% url 'accounts:login' %}" class="text-primary fw-bold text-decoration-none">Login here</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Premium Floating Label Fixes */
+    .form-floating > .form-control {
+        border-radius: 12px;
+        height: calc(3.5rem + 2px);
+    }
+
+    .form-floating > label {
+        padding: 1rem 0.75rem;
+        color: var(--bs-body-secondary);
+        transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    }
+
+    /* Fixes the "Large Screen" label issue by keeping it tucked inside the input */
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label {
+        transform: scale(0.85) translateY(-0.75rem) translateX(0.15rem);
+        color: var(--primary-color);
+        opacity: 0.8;
+    }
+
+    .form-floating > label::after {
+        background-color: transparent !important;
+    }
+
+    .x-small { font-size: 0.75rem; }
+
+    /* Custom scroll behavior if form is long */
+    @media (max-height: 700px) {
+        .container { padding-top: 2rem !important; }
+    }
+</style>
+{% endblock %}

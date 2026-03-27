@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Profile | Unit Trust{% endblock title %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+            
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h3 class="fw-bold text-body mb-0">Update Profile</h3>
+                <a class="btn btn-link text-body-secondary text-decoration-none small" href="{% url 'accounts:profile' %}">
+                    <i class="bi bi-arrow-left me-1"></i> Back to Profile
+                </a>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-body p-4 p-md-5">
+                    
+                    <div class="text-center mb-5">
+                        <div class="position-relative d-inline-block">
+                            {% if profile.profile_photo %}
+                                <img src="{{ profile.profile_photo.url }}" class="rounded-circle border border-4 border-white shadow-sm" style="width:120px; height:120px; object-fit:cover;">
+                            {% else %}
+                                <div class="bg-primary-subtle text-primary rounded-circle border border-4 border-white d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width:120px; height:120px; font-size: 2.5rem;">
+                                    {{ request.user.full_name|slice:":1"|upper }}
+                                </div>
+                            {% endif %}
+                            <div class="position-absolute bottom-0 end-0 bg-white rounded-circle shadow-sm border p-2" style="cursor: pointer;">
+                                <i class="bi bi-camera-fill text-primary"></i>
+                            </div>
+                        </div>
+                        <p class="x-small text-body-secondary mt-3">Upload a professional headshot for your ID card.</p>
+                    </div>
+
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+                        <div class="form-floating mb-3">
+                            <input class="form-control border-0 bg-light opacity-75" value="{{ request.user.phone_number }}" readonly style="cursor: not-allowed;">
+                            <label class="text-body-secondary">Phone Number (Verified)</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            {% render_field uform.full_name class="form-control border-0 bg-body-tertiary" placeholder="Full Name" %}
+                            <label>Full Name</label>
+                            {% for err in uform.full_name.errors %}
+                                <div class="text-danger x-small mt-1 ps-2">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            {% render_field uform.email class="form-control border-0 bg-body-tertiary" placeholder="Email Address" %}
+                            <label>Email Address</label>
+                            {% for err in uform.email.errors %}
+                                <div class="text-danger x-small mt-1 ps-2">{{ err }}</div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="form-label x-small fw-bold text-uppercase text-body-secondary tracking-wider mb-2">Change Profile Photo</label>
+                            <div class="input-group custom-file-button">
+                                {% render_field pform.profile_photo class="form-control border-0 bg-body-tertiary py-2" %}
+                            </div>
+                            <div class="x-small text-body-secondary mt-1">Accepted formats: JPG, PNG (Max 2MB)</div>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-4">
+                            <button class="btn btn-primary btn-lg rounded-3 fw-bold shadow-sm py-3" type="submit">
+                                <i class="bi bi-save2-fill me-2"></i> Save Changes
+                            </button>
+                        </div>
+
+                        <div class="text-center pt-3 border-top">
+                            <a class="btn btn-link text-warning text-decoration-none small" href="{% url 'accounts:password_change' %}">
+                                <i class="bi bi-shield-lock-fill me-1"></i> Update Your Password
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-primary-subtle { background-color: rgba(13, 59, 102, 0.1) !important; }
+    
+    .form-floating > label {
+        padding: 1rem 0.75rem !important;
+        background-color: transparent !important;
+        opacity: 0.7;
+    }
+    
+    .form-control:focus {
+        background-color: var(--bs-body-bg) !important;
+        box-shadow: 0 0 0 0.25rem rgba(13, 59, 102, 0.1);
+        border: 1px solid var(--primary-color) !important;
+    }
+
+    .x-small { font-size: 0.75rem; }
+    .tracking-wider { letter-spacing: 0.08em; }
+
+    /* File Input Styling */
+    input[type="file"]::file-selector-button {
+        background-color: #0d3b66;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        margin-right: 1rem;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}

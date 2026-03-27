@@ -6,20 +6,32 @@
 <section class="py-3 py-md-5 text-center">
     <div class="row py-lg-5 justify-content-center">
         <div class="col-lg-8 col-md-10">
-            <h1 class="display-4 display-md-3 fw-bold text-body mb-3">Unity Trust</h1>
-            <p class="lead text-body-secondary fs-6 fs-md-4 mb-4">"Together in Every Season"</p>
-            <p class="text-body-secondary fs-6 fs-md-5 mb-4 mb-md-5 px-2 px-md-5">
-                A purpose-driven organization committed to supporting members across Western Kenya through solidarity, compassion, and mutual aid.
-            </p>
-            <div class="d-grid gap-2 gap-md-3 d-sm-flex justify-content-sm-center">
-                <a href="{% url 'membership' %}" class="btn btn-primary btn-lg px-4 px-md-5 shadow-sm">
-                    <i class="bi bi-person-plus me-2"></i>Join Us
-                </a>
-            <a href="{% url 'about' %}" 
-   class="btn btn-outline-secondary btn-lg px-4 px-md-5 text-body border-secondary">
-   Learn More
-</a>
-            </div>
+                        {% if request.user.is_authenticated %}
+                            <h1 class="display-4 display-md-3 fw-bold text-body mb-3">Welcome back, {{ request.user.full_name }}</h1>
+                            <p class="lead text-body-secondary fs-6 fs-md-4 mb-4">Your membership status: <strong>{{ request.user.status }}</strong></p>
+                            <p class="text-body-secondary fs-6 fs-md-5 mb-4 mb-md-5 px-2 px-md-5">
+                                Use the dashboard to complete your profile, view payments, or access member resources.
+                            </p>
+                            <div class="d-grid gap-2 gap-md-3 d-sm-flex justify-content-sm-center">
+                                <a href="{% url 'members:dashboard' %}" class="btn btn-primary btn-lg px-4 px-md-5 shadow-sm">Go to Dashboard</a>
+                                <a href="{% url 'members:profile_view' %}" class="btn btn-outline-secondary btn-lg px-4 px-md-5">My Profile</a>
+                                {% if request.user.role == 'Chairman' or request.user.role == 'Secretary' or request.user.role == 'Treasurer' or request.user.is_superuser %}
+                                    <a href="{% url 'members:leader_home' %}" class="btn btn-outline-info btn-lg px-4 px-md-5 ms-2">Leader Dashboard</a>
+                                {% endif %}
+                            </div>
+                        {% else %}
+                            <h1 class="display-4 display-md-3 fw-bold text-body mb-3">Unity Trust</h1>
+                            <p class="lead text-body-secondary fs-6 fs-md-4 mb-4">"Together in Every Season"</p>
+                            <p class="text-body-secondary fs-6 fs-md-5 mb-4 mb-md-5 px-2 px-md-5">
+                                A purpose-driven organization committed to supporting members across Western Kenya through solidarity, compassion, and mutual aid.
+                            </p>
+                            <div class="d-grid gap-2 gap-md-3 d-sm-flex justify-content-sm-center">
+                                <a href="{% url 'membership' %}" class="btn btn-primary btn-lg px-4 px-md-5 shadow-sm">
+                                        <i class="bi bi-person-plus me-2"></i>Join Us
+                                </a>
+                                <a href="{% url 'about' %}" class="btn btn-outline-secondary btn-lg px-4 px-md-5 text-body border-secondary">Learn More</a>
+                            </div>
+                        {% endif %}
         </div>
 </section>
 

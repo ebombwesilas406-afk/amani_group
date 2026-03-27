@@ -1,0 +1,332 @@
+{% extends 'base.html' %} {% load accounts_tags %} {% block title %}Dashboard |
+Unity Trust{% endblock title %} {% block content %}
+<div class="container py-4 py-md-5">
+  <div
+    class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-4 gap-4"
+  >
+    <div class="d-flex align-items-center gap-3">
+      <div class="flex-shrink-0">
+        {% if profile.profile_photo %}
+        <img
+          src="{{ profile.profile_photo.url }}"
+          class="rounded-circle shadow-sm border border-2 border-white"
+          style="width: 65px; height: 65px; object-fit: cover"
+        />
+        {% else %}
+        <div class="avatar-gradient shadow">
+          {{ user.full_name|slice:":1"|upper }}
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="lh-sm">
+        <h4 class="fw-bold mb-1">Welcome, {{ user.full_name|first_name }}!</h4>
+        <div class="d-flex align-items-center flex-wrap gap-2">
+          <p class="mb-0 small text-muted">{{ user.role }}</p>
+          <span class="text-muted opacity-50">•</span>
+          {% if user.status == 'Active' %}
+          <span
+            class="badge bg-success-subtle text-success border border-success-subtle px-2 rounded-pill x-small"
+            >Verified Member</span
+          >
+          {% else %}
+          <span
+            class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 rounded-pill x-small"
+            >Pending</span
+          >
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 align-items-center">
+      <a
+        href="{% url 'members:profile_view' %}"
+        class="btn btn-white border rounded-3 px-3 py-2 shadow-sm d-flex align-items-center"
+      >
+        <i class="bi bi-person-circle me-2"></i> Profile
+      </a>
+      <button
+        class="btn btn-dark rounded-3 px-4 py-2 shadow-sm d-flex align-items-center"
+      >
+        <i class="bi bi-plus-lg me-2"></i> Deposit
+      </button>
+    </div>
+  </div>
+
+  {% if completion < 100 %}
+  <div
+    class="alert alert-primary border-0 rounded-4 shadow-sm p-4 mb-4 d-flex align-items-center gap-3"
+  >
+    <div class="icon-box bg-white text-primary flex-shrink-0 d-none d-sm-flex">
+      <i class="bi bi-shield-check"></i>
+    </div>
+    <div>
+      <h6 class="fw-bold mb-1">Complete your Membership Profile</h6>
+      <p class="small mb-0 opacity-75">
+        Submit your National ID and Next of Kin details to unlock loan
+        eligibility.
+      </p>
+    </div>
+    <a
+      href="{% url 'members:profile_edit' %}"
+      class="btn btn-primary btn-sm rounded-pill px-4 ms-auto d-none d-md-block"
+      >Update Now</a
+    >
+  </div>
+  {% endif %}
+
+  <div class="card glass-card border-0 mb-4 overflow-hidden">
+    <div class="card-body p-4">
+      <div class="d-flex justify-content-between align-items-end mb-2">
+        <div>
+          <span class="text-uppercase x-small fw-bold text-muted tracking-wider"
+            >Registration Progress</span
+          >
+          <h5 class="fw-bold mb-0">Compliance Checklist</h5>
+        </div>
+        <span class="fw-bold text-primary fs-4">{{ completion }}%</span>
+      </div>
+      <div class="progress modern-progress mb-1">
+        <div class="progress-bar" style="width: {{ completion }}%"></div>
+      </div>
+      <p class="x-small text-muted mb-0">
+        {% if completion == 100 %}Your account is fully compliant.{% else
+        %}Unlock full benefits by reaching 100%.{% endif %}
+      </p>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12 col-lg-8">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card glass-card border-0 p-4 h-100">
+            <div class="d-flex justify-content-between mb-4">
+              <div class="icon-box-sm"><i class="bi bi-wallet2"></i></div>
+              <span class="text-muted small">Updated Just Now</span>
+            </div>
+            <small class="text-muted text-uppercase fw-bold tracking-wider"
+              >Total Shares</small
+            >
+            <h2 class="fw-bold text-dark my-1">KES 0.00</h2>
+            <div class="mt-3">
+              <span class="text-success small fw-semibold"
+                ><i class="bi bi-graph-up-arrow me-1"></i>+0.0%</span
+              >
+              <span class="text-muted small ms-2">from last month</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card glass-card border-0 p-4 h-100">
+            <div class="d-flex justify-content-between mb-4">
+              <div class="icon-box-sm bg-purple-subtle text-purple">
+                <i class="bi bi-bank"></i>
+              </div>
+            </div>
+            <small class="text-muted text-uppercase fw-bold tracking-wider"
+              >Loan Limit</small
+            >
+            <h2 class="fw-bold text-dark my-1">KES 0.00</h2>
+            <p class="small text-muted mb-0">Based on 3x your total shares.</p>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card glass-card border-0">
+            <div class="card-header bg-transparent border-0 pt-4 px-4">
+              <h6 class="fw-bold mb-0">Recent Activity</h6>
+            </div>
+            <div class="card-body p-0">
+              <div class="list-group list-group-flush">
+                <div class="list-group-item bg-transparent px-4 py-3 border-0">
+                  <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-light p-2 me-3 text-primary">
+                      <i class="bi bi-person-plus"></i>
+                    </div>
+                    <div>
+                      <p class="mb-0 small fw-bold">Membership Started</p>
+                      <p class="mb-0 x-small text-muted">
+                        {{ user.date_joined|date:"d M Y" }}
+                      </p>
+                    </div>
+                    <span
+                      class="ms-auto badge bg-light text-dark border rounded-pill small"
+                      >System</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3 text-center">
+              <a href="#" class="x-small text-muted text-decoration-none"
+                >View Transaction History</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-4">
+      <div class="card border-0 bg-dark text-white rounded-4 p-4 mb-4 shadow">
+        <h6 class="fw-bold mb-3">Resource Center</h6>
+        <div class="vstack gap-2">
+          <a
+            href="{% url 'members:profile_pdf' %}"
+            class="btn btn-outline-light text-start py-3 border-secondary rounded-3 hover-lift"
+          >
+            <div class="d-flex align-items-center">
+              <i class="bi bi-file-earmark-pdf fs-4 me-3"></i>
+              <div>
+                <p class="mb-0 small fw-bold">Download Bylaws</p>
+                <p class="mb-0 x-small opacity-50">Unity Trust Policy Guide</p>
+              </div>
+            </div>
+          </a>
+          <a
+            href="#"
+            class="btn btn-outline-light text-start py-3 border-secondary rounded-3 hover-lift"
+          >
+            <div class="d-flex align-items-center">
+              <i class="bi bi-headset fs-4 me-3"></i>
+              <div>
+                <p class="mb-0 small fw-bold">Support Desk</p>
+                <p class="mb-0 x-small opacity-50">Talk to our treasurer</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="card glass-card border-0 p-4 shadow-sm">
+        <h6 class="fw-bold mb-3 small text-uppercase tracking-wider">
+          Account Security
+        </h6>
+        <div class="d-flex align-items-center gap-3">
+          <i class="bi bi-shield-lock text-success fs-2"></i>
+          <div>
+            <p class="small mb-0">
+              Your account is secured with 256-bit encryption.
+            </p>
+            <a
+              href="{% url 'accounts:password_change' %}"
+              class="x-small fw-bold text-primary text-decoration-none"
+              >Update Password →</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* CSS Variables for Consistency */
+  :root {
+    --primary-gradient: linear-gradient(135deg, #0d6efd, #4f46e5);
+  }
+
+  /* 🔥 Glassmorphism Logic - Dark Mode Compatible */
+  .glass-card {
+    /* Uses Bootstrap's variable for background, with opacity */
+    background: rgba(var(--bs-body-bg-rgb), 0.75);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    /* Uses Bootstrap's subtle border color variable */
+    border: 1px solid var(--bs-border-color-translucent);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Utilities */
+  .x-small {
+    font-size: 0.72rem;
+  }
+  .tracking-wider {
+    letter-spacing: 0.1em;
+  }
+
+  .avatar-gradient {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: var(--primary-gradient);
+    color: white;
+    font-weight: 800;
+    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Icon boxes adjusted for contrast */
+  .icon-box,
+  .icon-box-sm {
+    background: rgba(13, 110, 253, 0.15);
+    color: #0d6efd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+  }
+  .icon-box {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+  .icon-box-sm {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  /* Specifically target dark mode for extra contrast if needed */
+  [data-bs-theme="dark"] .glass-card {
+    background: rgba(var(--bs-body-bg-rgb), 0.4); /* Thinner glass on dark */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Keep text readable */
+  [data-bs-theme="dark"] .text-dark {
+    color: var(--bs-body-color) !important;
+  }
+
+  .bg-purple-subtle {
+    background: rgba(111, 66, 193, 0.15);
+  }
+  .text-purple {
+    color: #a277ff;
+  } /* Slightly lighter purple for dark mode */
+
+  .modern-progress {
+    height: 10px;
+    border-radius: 50px;
+    background: var(--bs-secondary-bg);
+  }
+  .modern-progress .progress-bar {
+    background: var(--primary-gradient);
+    border-radius: 50px;
+  }
+
+  .hover-lift {
+    transition: transform 0.2s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Ensure "btn-white" responds to theme */
+  .btn-white {
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+  }
+
+  @media (min-width: 992px) {
+    .h-100 {
+      height: 100% !important;
+    }
+  }
+</style>
+{% endblock %}

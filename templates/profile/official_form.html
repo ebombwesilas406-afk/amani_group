@@ -1,0 +1,294 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Official Membership Form | Unity Trust{% endblock title %}
+
+{% block content %}
+<div class="container py-4 py-md-5">
+
+    <!-- ===== PROGRESS HEADER ===== -->
+    <div class="form-progress mb-4">
+        <div class="d-flex justify-content-between small text-muted mb-2">
+            <span>Step 1: Details</span>
+            <span>Step 2: Kin</span>
+            <span>Step 3: Beneficiaries</span>
+            <span>Step 4: Declaration</span>
+        </div>
+        <div class="progress modern-progress">
+            <div class="progress-bar" style="width: 60%"></div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 col-xl-9">
+
+            <div class="mb-4 text-center text-md-start">
+                <h2 class="fw-bold text-body">Official Membership Form</h2>
+                <p class="text-body-secondary">Complete your formal SACCO record to unlock full benefits.</p>
+            </div>
+
+            <form method="post" id="membershipForm" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+
+                <!-- ===== MEMBER DETAILS ===== -->
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-primary text-white py-3 px-4 rounded-top-4">
+                        <h5 class="mb-0"><i class="bi bi-person-badge me-2"></i> Member Details</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="small text-body-secondary fw-bold">Full Name</label>
+                                <input class="form-control-plaintext border-bottom pb-1 fw-bold" value="{{ request.user.full_name }}" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="small text-body-secondary fw-bold">Phone Number</label>
+                                <input class="form-control-plaintext border-bottom pb-1 fw-bold" value="{{ request.user.phone_number }}" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-3">
+                            {% for field in pform %}
+                                {% if field.name != 'declaration_confirmed' and field.name != 'signature' %}
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {% render_field field class="form-control border-0 bg-body-tertiary" placeholder=field.label %}
+                                        <label>{{ field.label }}</label>
+                                    </div>
+                                    <div class="text-danger x-small mt-1">{{ field.errors }}</div>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== NEXT OF KIN ===== -->
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-dark text-white py-3 px-4 rounded-top-4">
+                        <h5 class="mb-0"><i class="bi bi-people-fill me-2"></i> Next of Kin</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            {% for field in nok_form %}
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {% render_field field class="form-control border-0 bg-body-tertiary" placeholder=field.label %}
+                                        <label>{{ field.label }}</label>
+                                    </div>
+                                    <div class="text-danger x-small mt-1">{{ field.errors }}</div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== BENEFICIARIES ===== -->
+                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                    <div class="card-header bg-body-tertiary py-3 px-4 d-flex justify-content-between align-items-center rounded-top-4">
+                        <h5 class="mb-0 text-body"><i class="bi bi-diagram-3 me-2"></i> Beneficiaries</h5>
+                        <button id="addBeneficiary" type="button" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm">
+                            <i class="bi bi-plus-lg me-1"></i> Add
+                        </button>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="text-muted small mb-3">
+                            Add beneficiaries who may receive support benefits.
+                        </p>
+                        {{ bformset.management_form }}
+                        <div id="beneficiaries" class="row g-3">
+                            {% for form in bformset %}
+                                <div class="col-12 col-md-6 beneficiary-item">
+                                    <div class="p-3 border rounded-4 bg-body-tertiary h-100 position-relative">
+                                        <button type="button" class="btn btn-link text-danger remove-beneficiary position-absolute top-0 end-0 p-2 text-decoration-none">
+                                            <i class="bi bi-x-circle-fill"></i>
+                                        </button>
+                                        <h6 class="small fw-bold text-primary mb-3">Beneficiary #{{ forloop.counter }}</h6>
+                                        {% for field in form %}
+                                            {% if field.name == 'DELETE' %}
+                                                <div class="d-none">{{ field }}</div>
+                                            {% else %}
+                                                <div class="form-floating mb-2">
+                                                    {% render_field field class="form-control border-0 bg-body" placeholder=field.label %}
+                                                    <label>{{ field.label }}</label>
+                                                </div>
+                                                <div class="text-danger x-small mb-2">{{ field.errors }}</div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== DECLARATION & SIGNATURE ===== -->
+                <div class="card border-0 shadow-sm rounded-4 mb-5">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3 border-bottom pb-2">Declaration</h5>
+                        <div class="form-check d-flex align-items-start mb-4">
+                            {% render_field pform.declaration_confirmed class="form-check-input me-3" style="width: 24px; height: 24px;" %}
+                            <label class="form-check-label text-body-secondary small" for="{{ pform.declaration_confirmed.id_for_label }}">
+                                I solemnly declare that the information provided above is correct and complete. 
+                                I understand that any false statements may lead to disqualification from Unity Trust membership.
+                            </label>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {% render_field pform.signature class="form-control border-0 bg-body-tertiary" placeholder="Sign" %}
+                                <label>Signature (Type Full Name)</label>
+                            </div>
+                            <div class="text-danger x-small mt-1">{{ pform.signature.errors }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ===== SUBMIT ===== -->
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary btn-lg px-5 rounded-3 fw-bold shadow-sm" type="submit">
+                        <i class="bi bi-cloud-check-fill me-2"></i> Save Application
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===== BENEFICIARY JS ===== -->
+<script>
+(function(){
+    const container = document.getElementById('beneficiaries');
+    const addBtn = document.getElementById('addBeneficiary');
+    const totalFormsInput = document.querySelector('input[name="form-TOTAL_FORMS"]');
+    
+    const getEmptyFormHtml = (index) => {
+        let html = `{{ bformset.empty_form.as_p|escapejs }}`;
+        return html.replace(/__prefix__/g, index);
+    };
+
+    function bindRemove(btn){
+        btn.onclick = function(){
+            const item = btn.closest('.beneficiary-item');
+            const deleteInput = item.querySelector('input[type=checkbox][name$="-DELETE"]');
+            if(deleteInput){
+                deleteInput.checked = true;
+                item.style.display = 'none';
+            } else {
+                item.remove();
+                totalFormsInput.value = parseInt(totalFormsInput.value) - 1;
+            }
+        };
+    }
+
+    addBtn.addEventListener('click', function(){
+        const formIdx = parseInt(totalFormsInput.value);
+        const wrapper = document.createElement('div');
+        wrapper.className = 'col-12 col-md-6 beneficiary-item';
+        wrapper.innerHTML = `
+            <div class="p-3 border rounded-4 bg-body-tertiary h-100 position-relative">
+                <button type="button" class="btn btn-link text-danger remove-beneficiary position-absolute top-0 end-0 p-2 text-decoration-none">
+                    <i class="bi bi-x-circle-fill"></i>
+                </button>
+                <h6 class="small fw-bold text-primary mb-3">New Beneficiary</h6>
+                ${getEmptyFormHtml(formIdx)}
+            </div>`;
+        
+        container.appendChild(wrapper);
+        totalFormsInput.value = formIdx + 1;
+        bindRemove(wrapper.querySelector('.remove-beneficiary'));
+    });
+
+    document.querySelectorAll('.remove-beneficiary').forEach(bindRemove);
+})();
+</script>
+
+<!-- ===== STYLE ===== -->
+<style>
+/* GLASS CARDS */
+.card {
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border: none;
+}
+
+/* SECTION HEADERS */
+.card-header {
+    border: none;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* FORM FIELDS */
+.form-control {
+    border-radius: 12px;
+    padding: 14px 12px;
+    transition: all 0.2s ease;
+}
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(13,110,253,0.15);
+    border-color: #0d6efd;
+}
+
+/* FLOATING LABELS */
+.form-floating > label {
+    padding: 1rem 0.75rem;
+    color: #6c757d;
+}
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    transform: scale(0.85) translateY(-0.7rem) translateX(0.15rem);
+    color: #0d6efd;
+}
+
+/* BENEFICIARY CARD */
+.beneficiary-item > div { transition: all 0.2s ease; }
+.beneficiary-item > div:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+
+/* ADD BUTTON */
+#addBeneficiary { transition: all 0.2s ease; }
+#addBeneficiary:hover { transform: scale(1.05); }
+
+/* PROGRESS BAR */
+.modern-progress {
+    height: 8px;
+    border-radius: 50px;
+    overflow: hidden;
+    background: #e9ecef;
+}
+.modern-progress .progress-bar {
+    background: linear-gradient(90deg, #0d6efd, #4f46e5);
+    border-radius: 50px;
+}
+
+/* DECLARATION CHECKBOX */
+.form-check-input { border-radius: 6px; cursor: pointer; }
+
+/* SUBMIT BUTTON */
+button[type="submit"] {
+    transition: all 0.25s ease;
+}
+button[type="submit"]:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.1); }
+
+/* STICKY SUBMIT MOBILE */
+@media (max-width: 768px) {
+    .d-grid {
+        position: sticky;
+        bottom: 0;
+        background: white;
+        padding: 10px;
+        z-index: 10;
+        border-top: 1px solid #eee;
+    }
+}
+
+/* SMALL TEXT */
+.x-small { font-size: 0.75rem; }
+
+/* REMOVE OLD DASHBOARD HOVER */
+.card:hover { transform: none; }
+
+</style>
+{% endblock %}

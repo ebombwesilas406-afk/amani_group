@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <h2>Leader Dashboard — {{ user.role }}</h2>
+  <p>Welcome, {{ user.full_name }}</p>
+  <ul>
+    <li><a href="{% url 'members:members_list' %}">View all members</a></li>
+    <li><a href="{% url 'admin:index' %}">Admin area</a></li>
+  </ul>
+</div>
+{% endblock %}

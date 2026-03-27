@@ -1,0 +1,42 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Confirm Delete — Dashboard{% endblock %}
+{% block dashboard_content %}
+<h3>Delete Member</h3>
+<p>Are you sure you want to delete <strong>{{ member.full_name }}</strong> ({{ member.phone_number }})?</p>
+<form method="post">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label class="form-label">Action</label>
+    <div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="action" id="permanent" value="permanent" checked>
+        <label class="form-check-label" for="permanent">Permanently delete</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="action" id="suspend" value="suspend">
+        <label class="form-check-label" for="suspend">Suspend account</label>
+      </div>
+    </div>
+  </div>
+  <div class="mb-3" id="suspend-days-group" style="display:none;">
+    <label class="form-label">Suspend for days (default 30)</label>
+    <input type="number" name="suspend_days" class="form-control" placeholder="30">
+  </div>
+  <button class="btn btn-danger">Proceed</button>
+  <a href="{% url 'members:members_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const suspendRadio = document.getElementById('suspend');
+  const permanentRadio = document.getElementById('permanent');
+  const group = document.getElementById('suspend-days-group');
+  function toggle(){
+    if(suspendRadio.checked){ group.style.display = 'block'; } else { group.style.display = 'none'; }
+  }
+  suspendRadio.addEventListener('change', toggle);
+  permanentRadio.addEventListener('change', toggle);
+  toggle();
+});
+</script>
+{% endblock %}

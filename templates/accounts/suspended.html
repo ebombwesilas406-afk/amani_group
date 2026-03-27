@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Account Suspended{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title text-danger">Account Suspended</h3>
+      <p>Your account has been suspended.</p>
+      {% if suspended_until %}
+        <p>Suspension expires on: <strong>{{ suspended_until }}</strong></p>
+      {% else %}
+        <p>Please contact your organisation administrator for details.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

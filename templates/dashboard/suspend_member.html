@@ -1,0 +1,17 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Suspend Member — Dashboard{% endblock %}
+{% block dashboard_content %}
+<div class="container">
+  <h3>Suspend Member</h3>
+  <p>Suspending <strong>{{ member.full_name }}</strong> ({{ member.phone_number }})</p>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Suspend for days</label>
+      <input type="number" name="suspend_days" class="form-control" value="{{ default_days }}">
+    </div>
+    <button class="btn btn-warning">Suspend</button>
+    <a class="btn btn-secondary" href="{% url 'members:members_list' %}">Cancel</a>
+  </form>
+</div>
+{% endblock %}

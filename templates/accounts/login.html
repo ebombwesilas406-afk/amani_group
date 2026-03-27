@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %} {% block title %}Login | Unity Trust{% endblock title %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4">
+        
+        <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="bg-primary-subtle text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                    <i class="bi bi-shield-lock-fill fs-2"></i>
+                </div>
+                <h2 class="fw-bold text-body">Welcome Back</h2>
+                <p class="text-body-secondary small">Secure access to your Unity Trust account</p>
+            </div>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger small py-2 mb-4">
+                        {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="form-floating mb-3">
+                    {% render_field form.username class="form-control border-0 bg-body-tertiary" placeholder="Username" %}
+                    <label for="{{ form.username.id_for_label }}">Username or Email</label>
+                    <div class="text-danger small">{{ form.username.errors }}</div>
+                </div>
+
+                <div class="form-floating mb-3">
+                    {% render_field form.password class="form-control border-0 bg-body-tertiary" placeholder="Password" %}
+                    <label for="{{ form.password.id_for_label }}">Password</label>
+                    <div class="text-danger small">{{ form.password.errors }}</div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="form-check">
+                        <input class="form-check-box me-1" type="checkbox" id="rememberMe">
+                        <label class="form-check-label small text-body-secondary" for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="small text-primary text-decoration-none">Forgot Password?</a>
+                </div>
+
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-lg rounded-3 shadow-sm fw-bold" type="submit">
+                        Sign In
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center mt-4 pt-2 border-top border-light-subtle">
+                <p class="small text-body-secondary mb-0">
+                    Not a member yet? <a href="{% url 'accounts:register' %}" class="text-primary fw-bold text-decoration-none">Join Unity Trust</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="{% url 'home' %}" class="text-body-secondary text-decoration-none small">
+                <i class="bi bi-arrow-left me-1"></i> Back to Homepage
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styling to match your professional theme */
+    .bg-primary-subtle { background-color: rgba(13, 59, 102, 0.1); }
+    
+    /* Ensure inputs pop in dark mode */
+    .form-control:focus {
+        background-color: var(--bs-body-bg) !important;
+        box-shadow: 0 0 0 0.25rem rgba(13, 59, 102, 0.15);
+        border: 1px solid var(--primary-color) !important;
+    }
+
+    /* Transition for the card on entry */
+    .card {
+        animation: slideUp 0.5s ease-out;
+    }
+    /* Fix for Floating Labels on Large Screens */
+.form-floating > .form-control {
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+}
+
+.form-floating > label {
+    padding: 1rem 0.75rem;
+    color: var(--bs-body-secondary); /* Ensures it adapts to theme */
+}
+
+/* Ensure the label background is transparent so it doesn't look like a white box */
+.form-floating > label::after {
+    background-color: transparent !important;
+}
+
+/* Adjust floating position when active */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+    transform: scale(0.85) translateY(-0.75rem) translateX(0.15rem);
+    color: var(--primary-color);
+    opacity: 0.8;
+}
+
+/* Smooth transition for both mobile and desktop */
+.form-floating label {
+    transition: all 0.2s ease-in-out;
+}
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+{% endblock %}

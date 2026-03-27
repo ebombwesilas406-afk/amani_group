@@ -1,0 +1,129 @@
+{% extends 'dashboard/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Member | {{ member.full_name }}{% endblock title %}
+
+{% block breadcrumb %}Edit Profile{% endblock %}
+
+{% block dashboard_content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+            
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <div>
+                    <h3 class="fw-bold text-body mb-1">Edit Member Account</h3>
+                    <p class="text-body-secondary small mb-0">Updating records for <span class="text-primary fw-semibold">{{ member.full_name }}</span></p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'members:leader_member_detail' member.id %}" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                        <i class="bi bi-eye me-1"></i> View Profile
+                    </a>
+                </div>
+            </div>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+                    <div class="card-header bg-primary text-white py-3 px-4">
+                        <h5 class="mb-0 small text-uppercase tracking-wider fw-bold">Primary Details</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {% render_field form.full_name class="form-control border-0 bg-body-tertiary" placeholder="Full Name" %}
+                                    <label>Full Name</label>
+                                </div>
+                                <div class="text-danger x-small mt-1">{{ form.full_name.errors }}</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {% render_field form.phone_number class="form-control border-0 bg-body-tertiary" placeholder="Phone Number" %}
+                                    <label>Phone Number</label>
+                                </div>
+                                <div class="text-danger x-small mt-1">{{ form.phone_number.errors }}</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {% render_field form.role class="form-select border-0 bg-body-tertiary" %}
+                                    <label>System Role</label>
+                                </div>
+                                <div class="text-danger x-small mt-1">{{ form.role.errors }}</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {% render_field form.status class="form-select border-0 bg-body-tertiary" %}
+                                    <label>Membership Status</label>
+                                </div>
+                                <div class="text-danger x-small mt-1">{{ form.status.errors }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+                    <div class="card-header bg-dark text-white py-3 px-4">
+                        <h5 class="mb-0 small text-uppercase tracking-wider fw-bold">Account Access</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-8">
+                                <h6 class="fw-bold mb-1">Security Update</h6>
+                                <p class="text-body-secondary small mb-0">Leave the password fields blank if you do not wish to change the member's current credentials.</p>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <span class="badge bg-light text-dark border px-3 py-2 rounded-pill">
+                                    <i class="bi bi-info-circle me-1"></i> Admin Override
+                                </span>
+                            </div>
+                            
+                            <hr class="my-3 opacity-10">
+
+                            {% if form.password %}
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    {% render_field form.password class="form-control border-0 bg-body-tertiary" placeholder="New Password" %}
+                                    <label>Reset Password</label>
+                                </div>
+                                <div class="text-danger x-small mt-1">{{ form.password.errors }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
+                    <button class="btn btn-outline-secondary btn-lg px-5 rounded-3 me-md-2" type="button" onclick="window.history.back()">
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary btn-lg px-5 rounded-3 fw-bold shadow-sm" type="submit">
+                        <i class="bi bi-check2-circle me-2"></i> Update Member Record
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Styling for consistency across the Admin Panel */
+    .form-floating > label {
+        padding: 1rem 0.75rem !important;
+        background-color: transparent !important;
+    }
+    
+    .form-control:focus, .form-select:focus {
+        background-color: var(--bs-body-bg) !important;
+        box-shadow: 0 0 0 0.25rem rgba(13, 59, 102, 0.1);
+        border: 1px solid var(--primary-color) !important;
+    }
+
+    .x-small { font-size: 0.75rem; }
+    .tracking-wider { letter-spacing: 0.08em; }
+</style>
+{% endblock %}
