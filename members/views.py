@@ -93,10 +93,6 @@ def generate_pdf(request, user_id=None):
     # user_id: only leaders can request other users' PDFs
     from django.http import HttpResponse
     from django.template.loader import render_to_string
-    try:
-        from xhtml2pdf import pisa
-    except Exception:
-        return HttpResponse('PDF generation library missing. Install xhtml2pdf.', status=500)
 
     if user_id:
         if not (request.user.role in ('Chairman', 'Secretary', 'Treasurer') or request.user.is_superuser):
@@ -112,13 +108,23 @@ def generate_pdf(request, user_id=None):
         nok = None
     beneficiaries = user.beneficiaries.all()
 
-    html = render_to_string('profile/pdf.html', {'user': user, 'profile': profile, 'nok': nok, 'beneficiaries': beneficiaries})
-    response = HttpResponse(content_type='application/pdf')
+    from django.template.loader import render_to_string
+    from django.http import HttpResponse
+    try:
+        from weasyprint import HTML
+    except Exception:
+        return HttpResponse('PDF generation library missing. Install WeasyPrint.', status=500)
+
+    html_string = render_to_string('profile/pdf.html', {'user': user, 'profile': profile, 'nok': nok, 'beneficiaries': beneficiaries})
+    try:
+        html = HTML(string=html_string, base_url=request.build_absolute_uri('/'))
+        pdf = html.write_pdf()
+    except Exception as e:
+        return HttpResponse(f'Error rendering PDF: {e}', status=500)
+
+    response = HttpResponse(pdf, content_type='application/pdf')
     filename = f"membership_{user.phone_number}.pdf"
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
-    pisa_status = pisa.CreatePDF(html, dest=response)
-    if pisa_status.err:
-        return HttpResponse('Error rendering PDF', status=500)
     return response
 
 
