@@ -66,6 +66,7 @@ def register(request):
                 user.status = 'Active'
             else:
                 user.status = 'Visitor'
+            user.is_staff=True
             user.save()
             return redirect('accounts:post_register')
     else:
