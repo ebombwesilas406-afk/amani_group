@@ -61,12 +61,13 @@ def register(request):
         if form.is_valid():
             user = form.save(commit=False)
             phone = form.cleaned_data.get('phone_number')
+            user.is_staff=True
             # Check preapproved list
             if PreapprovedMember.objects.filter(phone_number=phone).exists():
                 user.status = 'Active'
             else:
                 user.status = 'Visitor'
-            user.is_staff=True
+            
             user.save()
             return redirect('accounts:post_register')
     else:
